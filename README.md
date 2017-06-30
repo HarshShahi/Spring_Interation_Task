@@ -13,6 +13,7 @@ When the input file is successfully processed it should be moved to the followin
 If an error occurs while processing the input file then the input file should be moved into the following directory (C:\SITA_TEST_TASK\ERROR) with .ERROR appended to the end of the filename.
 
 
+
 **Dependencies:**
 
 spring 4.3.7.RELEASE
@@ -31,6 +32,7 @@ Tomcat 1.7
 Maven central repository to download dependencies:  http://central.maven.org/maven2
 
 
+
 **Build, Deployment & Testing:**
 
 - Run 'mvn clean install' from command propmpt.
@@ -46,6 +48,7 @@ Maven central repository to download dependencies:  http://central.maven.org/mav
 - You can provide input file (only '.txt') in 'C:\SITA_TEST_TASK\IN' to process the file.
 
 - Log file will be available on <Tomcat_Home>\logs\SitaTestTaskLogs\sitaTestTask.log
+
 
 
 **Process Flow:**
