@@ -43,11 +43,11 @@ Maven repository to download dependencies:
 
 **Process Flow:**
 
-On server startup the application get deployed and inbound-channel starts polling for message in from 'C:\SITA_TEST_TASK\IN' directory in interval of 5 secconds then sends to routerChannel.
+On server startup the application get deployed and inbound-channel starts polling for message from 'C:\SITA_TEST_TASK\IN' directory in interval of 5 secconds and sends to routerChannel.
 
-One Handler is configured at routerChannel which validates and further sends the valid message to processingChannel and invalid message to errorChannel. outbound-channel-adapter at errorChannel is responsible to generate the output in C:\SITA_TEST_TASK\ERROR directory with .ERROR extension. processingChannel has configured recipient-list-router which sends same message to two channels,
+One Handler is configured at routerChannel which validates and further sends the valid message to processingChannel and invalid message to errorChannel. The outbound-channel-adapter at errorChannel is responsible to generate the output in C:\SITA_TEST_TASK\ERROR directory with .ERROR extension. processingChannel has configured recipient-list-router which sends same message to two channels,
 
 1.	outputProcessChannel
 2.	processedChannel
 
-Service-activator has been configured at outputProcessChannel channel which performs the sum task and sends newly prepared message to outputChannel. outbound-channel-adapter on outputChannel generates with desired extension (.OUTPUT) also result, which is copied at C:\SITA_TEST_TASK\OUT directory. On processedChannel we have outbound-channel-adapter which is responsible to generate the output in C:\SITA_TEST_TASK\PROCESSED directory with desired extension (.PROCESSED).
+Service-activator has been configured at outputProcessChannel channel which performs the sum task and sends newly prepared message to outputChannel. The outbound-channel-adapter on outputChannel generates desired extension (.OUTPUT) with result, which is placed at C:\SITA_TEST_TASK\OUT directory. On processedChannel we have outbound-channel-adapter which is responsible to generate the output in C:\SITA_TEST_TASK\PROCESSED directory with desired extension (.PROCESSED).
