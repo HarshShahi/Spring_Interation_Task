@@ -44,11 +44,10 @@ public class RouterChannelHandlerTest {
      */
 	@Test
 	public void testValidMessage() {
-		Map<String, Object> headers = new HashMap<String, Object>();
-		headers.put("file_name", "valid.txt");
-		headers.put("correlation_id", "123");
-		MessageHeaders messageHeaders = new MessageHeaders(headers);
-		Message<String> message = MessageBuilder.createMessage("34\n4\n43\n54", messageHeaders);
+		Message<String> message = MessageBuilder.withPayload("34\n4\n43\n54")
+				                      			.setHeader("file_name", "valid.txt")
+				                      			.setHeader("correlation_id", "123")
+				                      			.build();
 		Assert.assertEquals("Message redirected to wrong channel..", "processingChannel", routerChannelHandler.inputMessageHandler(message));
 	}
 	
@@ -57,11 +56,9 @@ public class RouterChannelHandlerTest {
      */
 	@Test
 	public void testInvalidMessage() {
-		Map<String, Object> headers = new HashMap<String, Object>();
-		headers.put("file_name", "invalid.txt");
-		headers.put("correlation_id", "123");
-		MessageHeaders messageHeaders = new MessageHeaders(headers);
-		Message<String> message = MessageBuilder.createMessage("432\n12gfd\n4\n64", messageHeaders);
+		Message<String> message = MessageBuilder.withPayload("432\n12gfd\n4\n64")
+      											.setHeader("file_name", "valid.txt")
+      											.setHeader("correlation_id", "123").build();
 		Assert.assertEquals("Message redirected to wrong channel..", "errorChannel", routerChannelHandler.inputMessageHandler(message));
 	}
 	
