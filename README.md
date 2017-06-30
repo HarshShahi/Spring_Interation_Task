@@ -21,20 +21,19 @@ Maven repository to download dependencies:
 
 
 **Build, Deployment & Testing:**
+1 Run 'mvn clean install' from command propmpt.
 
-1. Run 'mvn clean install' from command propmpt.
+2 Create below directory structure in C:\ drive,
 
-2. Create below directory structure in C:\ drive,
-
-  'C:\SITA_TEST_TASK\IN'
+    'C:\SITA_TEST_TASK\IN'
   
-3. Deploy the war file in Tomcat,
+3 Deploy the war file in Tomcat,
 
-  Place the war file in webapps folder of Tomcat and run startup.bat.
+     Place the war file in webapps folder of Tomcat and run startup.bat.
   
-4. Log file will be available on <Tomcat_Home>\logs\SitaTestTaskLogs\sitaTestTask.log
+4 Log file will be available on <Tomcat_Home>\logs\SitaTestTaskLogs\sitaTestTask.log
 
-5. You can provide input file (only '.txt') in 'C:\SITA_TEST_TASK\IN' to process the file.
+5 You can provide input file (only '.txt') in 'C:\SITA_TEST_TASK\IN' to process the file.
 
 
 **Process Flow:**
