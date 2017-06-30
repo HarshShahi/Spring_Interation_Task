@@ -16,12 +16,19 @@ If an error occurs while processing the input file then the input file should be
 **Dependencies:**
 
 spring 4.3.7.RELEASE
+
 spring-integration 4.3.8.RELEASE
+
 junit 4.12
+
 log4j 1.2.17
+
 JDK 1.6 and above
+
 Tomcat 1.7
-Maven repository to download dependencies:
+
+
+Maven central repository to download dependencies:  http://central.maven.org/maven2
 
 
 **Build, Deployment & Testing:**
