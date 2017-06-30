@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context 
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/integration
+            http://www.springframework.org/schema/integration/spring-integration.xsd
+            http://www.springframework.org/schema/integration/file
+            http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+	
+	<context:property-placeholder location="classpath*:resources.properties" />
+
+	<!-- Inbound-channel-adapter configuration-->
+	<file:inbound-channel-adapter id="inChannel"
+		directory="${SITA.TEST.TASK.DIR}\\IN" auto-startup="true" filename-regex="${FILE.NAME.PATTERN}">
+		<int:poller id="poller" fixed-rate="${FILE.POLLING.INTERVAL}">
+			<int:transactional transaction-manager="transactionManager"
+				synchronization-factory="syncFactory" />
+		</int:poller>
+	</file:inbound-channel-adapter>
+	
+	<!-- Transcation to delete payload from inChannel -->
+	<bean id="transactionManager"
+		class="org.springframework.integration.transaction.PseudoTransactionManager" />
+
+	<int:transaction-synchronization-factory
+		id="syncFactory">
+		<int:after-commit expression="payload.delete()"
+			channel="nullChannel" />
+	</int:transaction-synchronization-factory>
+
+	<!-- File to string transformation -->
+	<file:file-to-string-transformer
+		input-channel="inChannel" output-channel="routerChannel" charset="UTF-8" />
+
+	<!-- <int:channel id="inChannel" /> -->
+	<!-- Router configuration -->
+	<int:router input-channel="routerChannel" ref="routerChannelHandler" method="inputMessageHandler" />
+
+	<!-- <int:channel id="processingChannel" /> -->
+	<!-- Recipient-list-router configuration to send same message to multiple channels-->
+	<int:recipient-list-router id="customRouter"
+		input-channel="processingChannel">
+		<int:recipient channel="outputProcessChannel" />
+		<int:recipient channel="processedChannel" />
+	</int:recipient-list-router>
+
+	<!-- Service-activator -->
+	<int:service-activator input-channel="outputProcessChannel"
+		ref="outputProcessChannelHandler" method="messageHandler" output-channel="outputChannel" />
+
+	<!-- Outbound-channel-adapter configuration -->
+	<file:outbound-channel-adapter id="outputChannel"
+		directory="${SITA.TEST.TASK.DIR}\\OUT" auto-create-directory="true"
+		filename-generator-expression="headers['file_name']+'${FILE.NAME.EXTENSION.OUTPUT}'" />
+
+	<file:outbound-channel-adapter id="errorChannel"
+		directory="${SITA.TEST.TASK.DIR}\\ERROR" auto-create-directory="true"
+		filename-generator-expression="headers['file_name']+'${FILE.NAME.EXTENSION.ERROR}'" />
+
+	<file:outbound-channel-adapter id="processedChannel"
+		directory="${SITA.TEST.TASK.DIR}\\PROCESSED" auto-create-directory="true"
+		filename-generator-expression="headers['file_name']+'${FILE.NAME.EXTENSION.PROCESSED}'" />
+	
+	<!-- Bean Configuration -->
+	<bean id="routerChannelHandler"
+		class="aero.sita.file.handler.RouterChannelHandler">
+	</bean>
+	
+	<bean id="outputProcessChannelHandler"
+		class="aero.sita.file.handler.OutputProcessChannelHandler">
+	</bean>
+</beans>
