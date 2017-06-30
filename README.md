@@ -8,6 +8,7 @@ The output file should have the same name as the input file with .OUTPUT appende
 When the input file is successfully processed it should be moved to the following directory (C:\SITA_TEST_TASK\PROCESSED) with .PROCESSED appended to the end of the file name.
 If an error occurs while processing the input file then the input file should be moved into the following directory (C:\SITA_TEST_TASK\ERROR) with .ERROR appended to the end of the filename.
 
+
 **Dependencies:**
 
 spring 4.3.7.RELEASE
@@ -18,19 +19,23 @@ JDK 1.6 and above
 Tomcat 1.7
 Maven repository to download dependencies:
 
+
 **Build, Deployment & Testing:**
 
-•	Run 'mvn clean install' from command propmpt.
+1. Run 'mvn clean install' from command propmpt.
 
-•	Create below directory structure in C:\ drive,
+2. Create below directory structure in C:\ drive,
+
   'C:\SITA_TEST_TASK\IN'
   
-•	Deploy the war file in Tomcat,
+3. Deploy the war file in Tomcat,
+
   Place the war file in webapps folder of Tomcat and run startup.bat.
   
-•	You can provide input file (only '.txt') in 'C:\SITA_TEST_TASK\IN' to process the file.
+4. Log file will be available on <Tomcat_Home>\logs\SitaTestTaskLogs\sitaTestTask.log
 
-•	Log file will be available on <Tomcat_Home>\logs\SitaTestTaskLogs\sitaTestTask.log
+5. You can provide input file (only '.txt') in 'C:\SITA_TEST_TASK\IN' to process the file.
+
 
 **Process Flow:**
 
