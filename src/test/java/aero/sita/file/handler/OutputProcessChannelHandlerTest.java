@@ -44,13 +44,12 @@ public class OutputProcessChannelHandlerTest {
      */
 	@Test
 	public void testValidMessage() {
-		Map<String, Object> headers = new HashMap<String, Object>();
-		headers.put("file_name", "valid.txt");
-		headers.put("correlation_id", "123");
-		MessageHeaders messageHeaders = new MessageHeaders(headers);
-		Message<String> message = MessageBuilder.createMessage("32\n4\n43\n54", messageHeaders);
+		Message<String> message = MessageBuilder.withPayload("34\n4\n43\n54")
+      											.setHeader("file_name", "valid.txt")
+      											.setHeader("correlation_id", "123").build();
 		Message<String> outputMsg = (Message<String>) outputProcessChannelHandler.messageHandler(message);
-		Assert.assertEquals("Sum is incorrect..", "133", outputMsg.getPayload().toString());
+		Assert.assertEquals("Sum is incorrect..", "135", outputMsg.getPayload().toString());
 		Assert.assertEquals("file_name name has been modified..", "valid.txt", outputMsg.getHeaders().get("file_name"));
+		Assert.assertEquals("correlation_id has been modified..","123", outputMsg.getHeaders().get("correlation_id"));
 	}
 }
