@@ -43,7 +43,7 @@ Maven repository to download dependencies:
 
 **Process Flow:**
 
-On server startup the application get deployed and inbound-channel starts polling for message from 'C:\SITA_TEST_TASK\IN' directory in interval of 5 secconds and sends to routerChannel.
+On server startup the application get deployed and inbound-channel-adapter starts polling for message from 'C:\SITA_TEST_TASK\IN' directory in interval of 5 secconds and sends to routerChannel.
 
 One Handler is configured at routerChannel which validates and further sends the valid message to processingChannel and invalid message to errorChannel. The outbound-channel-adapter at errorChannel is responsible to generate the output in C:\SITA_TEST_TASK\ERROR directory with .ERROR extension. processingChannel has configured recipient-list-router which sends same message to two channels,
 
